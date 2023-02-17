@@ -20,7 +20,8 @@ class Firebase {
   constructor() {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    // const analytics = getAnalytics(app);
+    getAnalytics(app);
   }
 }
 

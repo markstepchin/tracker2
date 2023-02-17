@@ -1,26 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { hangingKneeRaises, inclineBarbellPress, lateralRaises, standingPress, tricepsRopePushdowns } from './exercises';
-import { useReducer, useState } from 'react';
-import { FirebaseContext } from './Firebase';
-
-
-// Greek god program 
-
-// phase 1 (8 weeks)
-
-// phase 2 (8 weeks)
-
-// phase 3 (8 weeks)
-
-
-/*
-where am i in the program
-
-list of workouts
-
-way to view prev workouts
-*/
+import { useReducer } from 'react';
+import RepButton from './RepButton';
 
 const workoutA = [
   inclineBarbellPress,
@@ -105,32 +86,6 @@ const prevWorkout = {
       weight: 120
     },
   ],
-}
-
-const RepButton = ({ value, updateValue, min, max, prevValue }) => {
-  const updateRep = (e) => {
-    if (value === null) {
-      updateValue(max)
-    } else if (value === 0) {
-      updateValue(null);
-    } else if (value > 0) {
-      updateValue(value - 1);
-    } else {
-      updateValue(max);
-    }
-  }
-
-  return (
-    <button
-      style={{
-        width: '72px',
-        backgroundColor: value ? 'grey' : "lightgrey",
-        // backgroundColor: currentRep >= min ? 'lightgray': "red"
-      }}
-      onClick={updateRep}>
-      {value === 0 ? 'skipped' : value || prevValue}
-    </button>
-  )
 }
 
 const initializeProgress = (workout) =>
