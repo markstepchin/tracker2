@@ -129,7 +129,7 @@ function LiveWorkout() {
         <p>
           Greek God
         </p>
-        <b>Workout A (Phase One)</b>
+        <b>Workout A - Phase One</b>
       </header>
       <section style={{ display: "flex" }}>
         <div style={{ width: "66%" }}>
