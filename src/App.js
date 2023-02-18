@@ -30,7 +30,7 @@ function App({ firebase }) {
     firebase.saveWorkout(progress);
   }
 
-  return loading ? <h1>loading</h1> : <LiveWorkout onSubmit={onSubmit} />;
+  return <LiveWorkout onSubmit={onSubmit} />;
 }
 
 export default withFirebase(App);
