@@ -1,23 +1,29 @@
 import React from "react";
 
-const RepButton = ({ value, updateValue, min, max, prevValue }) => {
+const RepButton = ({ value, updateValue, min, max, prevValue, setIndex, exerciseId }) => {
+  console.log("RepButton")
+
   const updateRep = (e) => {
     if (value === null) {
-      updateValue(max)
-    } else if (value === 0) {
-      updateValue(null);
-    } else if (value > 0) {
-      updateValue(value - 1);
+      updateValue(prevValue, setIndex, exerciseId)
+    }
+    // else if (value === 0) {
+    //   updateValue(min);
+    // } 
+    else if (value < max) {
+      updateValue(value + 1, setIndex, exerciseId);
     } else {
-      updateValue(max);
+      updateValue(0, setIndex, exerciseId);
     }
   }
+
+  const color = !value ? 'lightgrey' : value >= min && value <= max ? 'green' : 'red';
 
   return (
     <button
       style={{
         width: '72px',
-        backgroundColor: value ? 'grey' : "lightgrey",
+        backgroundColor: color,
         // backgroundColor: currentRep >= min ? 'lightgray': "red"
       }}
       onClick={updateRep}>
@@ -26,4 +32,4 @@ const RepButton = ({ value, updateValue, min, max, prevValue }) => {
   )
 }
 
-export default RepButton
+export default RepButton;

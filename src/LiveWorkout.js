@@ -1,7 +1,9 @@
 import './App.css';
 import { hangingKneeRaises, inclineBarbellPress, lateralRaises, standingPress, tricepsRopePushdowns } from './exercises';
-import { useReducer } from 'react';
+import { useEffect, useReducer, memo, useMemo } from 'react';
 import RepButton from './RepButton';
+
+const PureRepButton = memo(RepButton);
 
 const workoutA = [
   inclineBarbellPress,
@@ -99,6 +101,11 @@ const initializeProgress = (workout) =>
   );
 
 
+
+
+
+
+
 function reducer(state, action) {
   const { exerciseId, setCount, newValue } = action.payload;
   const updatedState = { ...state };
@@ -120,19 +127,34 @@ function reducer(state, action) {
   }
 }
 
-function LiveWorkout() {
+function LiveWorkout({ onSubmit }) {
   const [progress, dispatch] = useReducer(reducer, workoutA, initializeProgress);
 
+  const updateReps = useMemo(() => (newValue, i, exerciseId) =>
+    dispatch({
+      type: 'updateReps',
+      payload: {
+        exerciseId,
+        setCount: i,
+        newValue
+      },
+    }), [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Greek God
-        </p>
-        <b>Workout A - Phase One</b>
-      </header>
+    <div className=" max-w-sm mx-auto">
+
+      <div className="flex justify-between align-middle my-5">
+        <h1 className="text-2xl">Workout A - Phase One</h1>
+        <button
+          class="bg-gray-800 text-white font-bold rounded-full px-4 py-2 shadow-lg uppercase tracking-wider"
+          onClick={() => onSubmit(progress)}
+        >
+          Save
+        </button>
+      </div>
+
       <section style={{ display: "flex" }}>
-        <div style={{ width: "66%" }}>
+        <div >
           {workoutA.map(exercise =>
             <div key={exercise.id}>
               <h3>
@@ -143,21 +165,14 @@ function LiveWorkout() {
               </h3>
               {exercise.sets.map((set, i) => (
                 <div style={{ display: 'flex', }} key={`${exercise.id}-${i}`}>
-                  <RepButton
-                    updateValue={(newValue) =>
-                      dispatch({
-                        type: 'updateReps',
-                        payload: {
-                          exerciseId: exercise.id,
-                          setCount: i,
-                          newValue
-                        },
-                      })
-                    }
+                  <PureRepButton
+                    updateValue={updateReps}
                     value={progress[exercise.id][i]?.reps}
                     prevValue={prevWorkout[exercise.id][i]?.reps}
                     min={set.min}
                     max={set.max}
+                    setIndex={i}
+                    exerciseId={exercise.id}
                   />
                   <div>
                     <input
@@ -170,8 +185,7 @@ function LiveWorkout() {
                             setCount: i,
                             newValue: e.target.value
                           },
-                        })
-                      }
+                        })}
                       value={progress[exercise.id][i].weight || ''}
                     // defaultValue={prevWorkout[exercise.id][i].weight}
                     />
@@ -185,12 +199,12 @@ function LiveWorkout() {
             </div>
           )}
         </div>
-        <pre style={{ width: '33%' }}>{JSON.stringify(progress, null, 2)}</pre>
+        {/* <pre style={{ width: '33%' }}>{JSON.stringify(progress, null, 2)}</pre> */}
       </section>
       <section>
         Timer
       </section>
-    </div>
+    </div >
   );
 }
 
