@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { withFirebase } from './Firebase/context';
 import LiveWorkout from './LiveWorkout';
@@ -23,8 +23,6 @@ way to view prev workouts
 
 
 function App({ firebase }) {
-  const [loading, setLoading] = useState()
-
   const onSubmit = (progress) => {
     console.log({ progress });
     console.log(firebase);

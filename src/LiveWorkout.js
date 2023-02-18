@@ -1,6 +1,6 @@
 import './App.css';
 import { hangingKneeRaises, inclineBarbellPress, lateralRaises, standingPress, tricepsRopePushdowns } from './exercises';
-import { useEffect, useReducer, memo, useMemo } from 'react';
+import { useReducer, memo, useMemo } from 'react';
 import RepButton from './RepButton';
 
 const PureRepButton = memo(RepButton);
