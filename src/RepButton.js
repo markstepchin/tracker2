@@ -17,15 +17,11 @@ const RepButton = ({ value, updateValue, min, max, prevValue, setIndex, exercise
     }
   }
 
-  const color = !value ? 'lightgrey' : value >= min && value <= max ? 'green' : 'red';
+  const color = !value ? '' : value >= min && value <= max ? 'bg-green-400' : 'bg-red-300';
 
   return (
     <button
-      style={{
-        width: '72px',
-        backgroundColor: color,
-        // backgroundColor: currentRep >= min ? 'lightgray': "red"
-      }}
+      className={`rounded py-1 px-2 bg-zinc-100 text-gray-700 ${color} w-16`}
       onClick={updateRep}>
       {value === 0 ? 'skipped' : value || prevValue}
     </button>
